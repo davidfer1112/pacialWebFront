@@ -1,5 +1,6 @@
 package com.example.parcialweb.service;
 
+import com.example.parcialweb.entity.BibliotecaDavid;
 import com.example.parcialweb.entity.LibroDavid;
 import com.example.parcialweb.repository.LibroDavidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,17 @@ public class LibroDavidService {
         return libroDavidRepository.save(libro);
     }
 
-    public void deleteLibro(long id) {
+    public LibroDavid updateLibro(Long id, LibroDavid libro) {
+        if (libroDavidRepository.existsById(id)) {
+            LibroDavid nuevo = libroDavidRepository.findById(id).orElse(null);
+            nuevo.setNombre(libro.getNombre());
+            nuevo.setAutor(libro.getAutor());
+            return libroDavidRepository.save(nuevo);
+        }
+        return null;
+    }
+
+    public void deleteLibro(Long id) {
         libroDavidRepository.deleteById(id);
     }
 }
